@@ -1,0 +1,18 @@
+/************Part 1: implement JDBC in SpringMVC project**************/
+1. Create a SpringMVC project
+2. Add MySQL connector dependent library in pom.xml
+3. Update your project under Maven
+3. copy the method "jdbcAdd" of HomeController to one of your controller  
+
+/************Part 2: implement Hibernate in SpringMVC project**************/
+1. Create a SpringMVC project
+2. Add Hibernated related dependent library in pom.xml
+3. Update your project under Maven
+4. Create a POJO class, and put the class under the package "au.edu.sydney.elec5619.domain" in "scr/main/java"
+5. Create a "database.property" file into "scr/main/resource" folder. This property file contain the information of your database settings. 
+6. Create a new file named "hibernate-context.xml" into "Webapp/WEB-INF/spring/appServlet" folder. This file contain the configuration of Hibernate  
+7. Edit the web.xml file to access the "hibernate-context.xml"
+
+/************Part 3: Add DAO layer base on Part 2**************/
+1. Create a DAO class/interface, using "@Repository" annotation
+2. In controller, "@Autowired" the DAO object
