@@ -16,3 +16,7 @@
 /************Part 3: Add DAO layer base on Part 2**************/
 1. Create a DAO class/interface, using "@Repository" annotation
 2. In controller, "@Autowired" the DAO object
+
+/************Part 4: Add Service layer base on Part 3**************/
+1. Create a service class/interface, using "@Service" annotation
+2. In controller, "@Autowired" the Service object
