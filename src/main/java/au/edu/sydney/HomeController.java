@@ -6,14 +6,18 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Expression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,8 +36,8 @@ public class HomeController {
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-//    @Autowired
-//    private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
     
     @Autowired
     private PersonDao personDao;
@@ -55,9 +59,6 @@ public class HomeController {
         return "home";
     }
 
-    /**
-     * Simply selects the home view to render by returning its name.
-     */
     @RequestMapping(value = "/jdbcAdd", method = RequestMethod.GET)
     public String jdbcAdd(Locale locale, Model model) {
         
@@ -119,13 +120,6 @@ public class HomeController {
         return "home";
     }
     
-    /**
-     * Simply selects the home view to render by returning its name.
-     */
-    
-    
-    @Autowired
-    private SessionFactory sessionFactory;
     @RequestMapping(value = "/hibernateAdd", method = RequestMethod.GET)
     public String hibernateAdd(Locale locale, Model model) {
         
@@ -139,9 +133,6 @@ public class HomeController {
     }
 
     
-    /**
-     * Simply selects the home view to render by returning its name.
-     */
     @RequestMapping(value = "/hibernateDaoAdd", method = RequestMethod.GET)
     public String hibernateDaoAdd(Locale locale, Model model) {
         Person p = new Person();
@@ -154,9 +145,6 @@ public class HomeController {
         return "home";
     }
 
-    /**
-     * Simply selects the home view to render by returning its name.
-     */
     @RequestMapping(value = "/hibernateDaoServiceAdd", method = RequestMethod.GET)
     public String hibernateDaoServiceAdd(Locale locale, Model model) {
         Person p = new Person();
@@ -168,5 +156,30 @@ public class HomeController {
         
         return "home";
     }
+    
+    @RequestMapping(value = "/hibernateQuery", method = RequestMethod.GET)
+    public String hibernateQuery(Locale locale, Model model) {
+        
+        // different query
+        
+        // method 1: fetch by Id
+        Person p1 = (Person)sessionFactory.getCurrentSession().get(Person.class, 1);
+        System.out.println(p1.getFirst()+":"+p1.getAge());
+        
+        // method 2: HQL (Hibernate Query Language)
+        Query query = sessionFactory.getCurrentSession().createQuery("from Person p where p.id = :id");
+        query.setInteger("id", 1);
+        Person p2= (Person)query.uniqueResult();
+        System.out.println(p2.getFirst()+":"+p2.getAge());
+        
+        // method 3: Hibernate Criteria API
+        Criteria creteria =sessionFactory.getCurrentSession().createCriteria(Person.class);
+        creteria.add(Expression.like("first", "FirstName"));
+        List<Person> result = (List<Person>)creteria.list();
+        System.out.println(result.size());
+        
+        return "home";
+    }
+    
     
 }
