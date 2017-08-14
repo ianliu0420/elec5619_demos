@@ -31,6 +31,7 @@ import au.edu.sydney.service.PersonService;
  * Handles requests for the application home page.
  */
 @Controller
+// make the operations are transactional
 @Transactional
 public class HomeController {
 
