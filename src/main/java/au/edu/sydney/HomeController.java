@@ -81,9 +81,7 @@ public class HomeController {
            System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
            
-           String insertTableSQL = "INSERT INTO employee"
-                           + "(id, age, first, last) VALUES"
-                           + "(?,?,?,?)";
+           String insertTableSQL = "INSERT INTO employee (id, age, first, last) VALUES (?,?,?,?)";
            
            preparedStatement = conn.prepareStatement(insertTableSQL);
            preparedStatement.setInt(1, 1);
