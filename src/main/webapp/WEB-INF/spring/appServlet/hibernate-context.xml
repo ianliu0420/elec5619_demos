@@ -24,7 +24,7 @@
 		<property name="location" value="classpath:/database.properties" />
 	</bean>
 
-	<!-- config data source, here we use alibaba druid data source -->
+	<!-- config data source, here we use DBCP data source -->
 	<bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
